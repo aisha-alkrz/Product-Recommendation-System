@@ -23,3 +23,15 @@ CREATE TABLE IF NOT EXISTS Products (
     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
 );
 """)
+
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS ProductRelations (
+    relation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    base_product_id INTEGER NOT NULL,
+    related_product_id INTEGER NOT NULL,
+    similarity_score REAL NOT NULL,
+    FOREIGN KEY (base_product_id) REFERENCES Products(product_id),
+    FOREIGN KEY (related_product_id) REFERENCES Products(product_id)
+);
+""")
