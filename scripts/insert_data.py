@@ -46,3 +46,24 @@ INSERT INTO Products (name, price, brand, type, color, category_id, cluster_id_n
 VALUES (?, ?, ?, ?, ?, ?, ?)
 """, products)
 conn.commit()
+
+
+
+relations = [
+    (1, 2, 0.85),   # Laptop → Mouse
+    (3, 4, 0.75),   # Lipstick → Foundation
+    (5, 6, 0.65),   # Desk → Lamp
+    (2, 17, 0.7),   # Mouse → Keyboard
+    (4, 9, 0.6),    # Foundation → Powder
+    (14, 13, 0.5),  # Serum → LED Light 
+    (3, 10, 0.6),   # Lipstick → Eyeliner
+    (11, 19, 0.55), # Bookshelf → Table
+    (8, 20, 0.7),   # Headphones → USB-C Hub
+    (12, 18, 0.65)  # Brush Set → Blush Palette
+]
+
+cursor.executemany("""
+INSERT INTO ProductRelations (base_product_id, related_product_id, similarity_score)
+VALUES (?, ?, ?)
+""", relations)
+conn.commit()
