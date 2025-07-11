@@ -67,3 +67,6 @@ INSERT INTO ProductRelations (base_product_id, related_product_id, similarity_sc
 VALUES (?, ?, ?)
 """, relations)
 conn.commit()
+conn.close()
+
+print("Successfully inserted", len(categories), "categories and", len(products), "products" , len(relations), "ProductRelations")
