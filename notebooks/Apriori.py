@@ -44,3 +44,29 @@ data = [
 
 df = pd.DataFrame(data, columns=["InvoiceID", "ProductID"])
 transactions = df.groupby("InvoiceID")["ProductID"].apply(list).tolist()
+
+
+from mlxtend.preprocessing import TransactionEncoder
+
+te = TransactionEncoder()
+te_array = te.fit(transactions).transform(transactions)
+
+df_encoded = pd.DataFrame(te_array, columns=te.columns_)
+
+
+
+from mlxtend.frequent_patterns import apriori
+
+frequent_itemsets = apriori(df_encoded, min_support=0.05, use_colnames=True)
+print(" Frequent Itemsets:")
+print(frequent_itemsets)
+
+
+from mlxtend.frequent_patterns import association_rules
+
+rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.5)
+
+# عرض أهم الأعمدة
+print("Association Rules:")
+print(rules[['antecedents', 'consequents', 'support', 'confidence', 'lift']])
+

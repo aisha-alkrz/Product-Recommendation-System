@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Products (
     price REAL NOT NULL,
     brand TEXT,
     type TEXT,
-    color TEXT,
+    color TEXT,  
     category_id INTEGER,
     cluster_id_no_price INTEGER,
     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
