@@ -1,37 +1,42 @@
 import sqlite3 as sql;
 
+# Connect to SQLite database (or create it if it doesn't exist)
 conn = sql.connect("data/products.db")
 cursor = conn.cursor()
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS Categories (
-    category_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL
-);
-""")
-
+# Create the Products table
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS Products (
-    product_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    price REAL NOT NULL,
+    product_id INTEGER PRIMARY KEY,
+    name TEXT,
+    category TEXT,
+    price REAL,
     brand TEXT,
-    type TEXT,
-    color TEXT,  
-    category_id INTEGER,
-    cluster_id_no_price INTEGER,
-    FOREIGN KEY (category_id) REFERENCES Categories(category_id)
+    rating REAL,
+    stock INTEGER,
+    warranty_years INTEGER,
+    supplier_country TEXT,
+    weight_kg REAL,
+    volume_cm3 REAL,
+    power_watt REAL,
+    connectivity_type TEXT,
+    material_type TEXT,
+    usage_type TEXT,
+    price_category TEXT
 );
 """)
 
-
+# Create the Invoices table
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS ProductRelations (
-    relation_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    base_product_id INTEGER NOT NULL,
-    related_product_id INTEGER NOT NULL,
-    similarity_score REAL NOT NULL,
-    FOREIGN KEY (base_product_id) REFERENCES Products(product_id),
-    FOREIGN KEY (related_product_id) REFERENCES Products(product_id)
+CREATE TABLE IF NOT EXISTS Invoices (
+    invoice_id TEXT,
+    product_id INTEGER,
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
 """)
+
+# Save changes and close the connection
+conn.commit()
+conn.close()
+
+print("✅ Database and tables created successfully.")
