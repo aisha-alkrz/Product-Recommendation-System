@@ -22,3 +22,31 @@ selected_cluster = selected_row["cluster_id_with_price"]
 
 st.markdown(f"### Selected Product ID: {selected_id}")
 st.markdown(f"Cluster ID: {selected_cluster}")
+# === Step 4: Recommendations from same cluster ===
+st.subheader("🔗 Products from the same cluster")
+
+same_cluster_df = products_df[
+    (products_df["cluster_id_with_price"] == selected_cluster) &
+    (products_df["product_id"] != selected_id)
+]
+
+if not same_cluster_df.empty:
+    st.table(same_cluster_df[["name", "brand", "price"]])
+else:
+    st.info("No products found in the same cluster.")
+
+# === Step 5: Recommendations from Apriori rules ===
+st.subheader(" Apriori-based Recommendations")
+
+reco_ids = set()
+for _, row in rules.iterrows():
+    if selected_id in row["antecedents"]:
+        reco_ids.update(row["consequents"])
+
+reco_ids.discard(selected_id)
+apriori_reco = products_df[products_df["product_id"].isin(reco_ids)]
+
+if not apriori_reco.empty:
+    st.table(apriori_reco[["name", "brand", "price"]])
+else:
+    st.info("No association rules found for this product.")
