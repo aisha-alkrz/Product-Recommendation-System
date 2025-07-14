@@ -11,7 +11,6 @@ conn.close()
 rules = pd.read_csv("Data/apriori_rules.csv")
 rules["antecedents"] = rules["antecedents"].apply(eval)
 rules["consequents"] = rules["consequents"].apply(eval)
-
 # === Step 3: Product Selection UI ===
 st.title("🛍 Product Recommendation System")
 product_names = products_df["name"].tolist()
@@ -23,7 +22,6 @@ selected_cluster = selected_row["cluster_id_with_price"]
 
 st.markdown(f"### Selected Product ID: {selected_id}")
 st.markdown(f"Cluster ID: {selected_cluster}")
-
 # === Step 4: Recommendations from same cluster ===
 st.subheader("🔗 Products from the same cluster")
 
