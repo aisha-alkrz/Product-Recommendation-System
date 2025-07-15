@@ -6,3 +6,11 @@ import streamlit as st
 conn = sqlite3.connect("Data/products.db")
 products_df = pd.read_sql_query("SELECT * FROM Products", conn)
 conn.close()
+# === Step 2: Load Apriori rules ===
+rules = pd.read_csv("Data/apriori_rules.csv")
+rules["antecedents"] = rules["antecedents"].apply(eval)
+rules["consequents"] = rules["consequents"].apply(eval)
+# === Step 3: Product Selection UI ===
+st.title("🛍 Product Recommendation System")
+product_names = products_df["name"].tolist()
+selected_product = st.selectbox("Select a product", product_names)
