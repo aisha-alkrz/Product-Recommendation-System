@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Products (
 # Create the Invoices table
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS Invoices (
-    invoice_id TEXT,
+    invoice_id INTEGER,
     product_id INTEGER,
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
