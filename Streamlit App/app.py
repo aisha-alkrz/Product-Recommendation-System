@@ -20,3 +20,9 @@ same_cluster_df = products_df[
     (products_df["cluster_id_with_price"] == selected_cluster) &
     (products_df["product_id"] != selected_id)
 ]
+# === Step 5: Recommendations from Apriori rules ===
+st.subheader("📈 Apriori-based Recommendations")
+reco_ids = set()
+for _, row in rules.iterrows():
+    if selected_id in row["antecedents"]:
+        reco_ids.update(row["consequents"])
