@@ -36,13 +36,16 @@ for _, row in products_df.iterrows():
 # Insert invoices similarly with normalized columns
 for _, row in invoices_df.iterrows():
     try:
+        invoice_id_str = str(row['invoiceid'])          
+        product_id_str = str(row['productid'])          
         cursor.execute("""
             INSERT INTO Invoices (invoice_id, product_id)
             VALUES (?, ?)
-        """, (row['invoiceid'], row['productid']))
+        """, (invoice_id_str, product_id_str))
     except Exception as e:
         print(f"❌ Skipping invoice row due to error: {e}")
         continue
+
 
 conn.commit()
 conn.close()
