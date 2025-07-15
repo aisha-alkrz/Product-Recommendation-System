@@ -19,3 +19,11 @@ div.block-container {
 # Product selection
 all_products = clustered_with_price['productname'].unique()
 selected_product = st.selectbox("Select a product:", sorted(all_products))
+# Clustering mode selection
+mode = st.radio("Choose clustering method:", ["📊 With Price", "🔍 Without Price"])
+
+# Select dataset based on mode
+df = clustered_with_price if mode == "📊 With Price" else clustered_without_price
+
+# Get cluster of selected product
+product_cluster = df[df['productname'] == selected_product]['cluster'].values[0]
