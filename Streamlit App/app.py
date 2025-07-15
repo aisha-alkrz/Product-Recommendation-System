@@ -14,3 +14,9 @@ rules["consequents"] = rules["consequents"].apply(eval)
 st.title("🛍 Product Recommendation System")
 product_names = products_df["name"].tolist()
 selected_product = st.selectbox("Select a product", product_names)
+# === Step 4: Recommendations from same cluster ===
+st.subheader("🔗 Products from the same cluster")
+same_cluster_df = products_df[
+    (products_df["cluster_id_with_price"] == selected_cluster) &
+    (products_df["product_id"] != selected_id)
+]
