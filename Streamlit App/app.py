@@ -16,3 +16,6 @@ div.block-container {
 }
 </style>
 """, unsafe_allow_html=True)
+# Product selection
+all_products = clustered_with_price['productname'].unique()
+selected_product = st.selectbox("Select a product:", sorted(all_products))
