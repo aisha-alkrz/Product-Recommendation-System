@@ -27,3 +27,10 @@ df = clustered_with_price if mode == "📊 With Price" else clustered_without_pr
 
 # Get cluster of selected product
 product_cluster = df[df['productname'] == selected_product]['cluster'].values[0]
+# Show similar products in the same cluster
+st.markdown("### 🔗 Products from the same cluster:")
+similar_products = df[(df['cluster'] == product_cluster) & (df['productname'] != selected_product)]
+if not similar_products.empty:
+    st.table(similar_products[['productname']].reset_index(drop=True).rename(columns={"productname": "Similar Product"}))
+else:
+    st.info("No other products found in the same cluster.")
