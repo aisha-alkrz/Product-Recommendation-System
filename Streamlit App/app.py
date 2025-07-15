@@ -34,3 +34,13 @@ if not similar_products.empty:
     st.table(similar_products[['productname']].reset_index(drop=True).rename(columns={"productname": "Similar Product"}))
 else:
     st.info("No other products found in the same cluster.")
+# Show associated products from Apriori rules
+st.markdown("### 🧠 Recommended products (Apriori rules):")
+related_rules = apriori_rules[apriori_rules['antecedents'].str.contains(selected_product)]
+if not related_rules.empty:
+    for _, row in related_rules.iterrows():
+        product = list(eval(row['consequents']))[0]
+        confidence = row['confidence']
+        st.markdown(f"- *{product}* (confidence: {confidence:.2f})")
+else:
+    st.info("No association rules found for this product.")
